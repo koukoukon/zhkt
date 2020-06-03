@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="smart-class-mapper" />
+        <module name="smart-class-domain" />
+        <module name="smart-class-web" />
+        <module name="smart-class-service" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="smart-class" target="1.8" />
+      <module name="smart-class-domain" target="1.8" />
+      <module name="smart-class-mapper" target="1.8" />
+      <module name="smart-class-parent" target="1.8" />
+      <module name="smart-class-service" target="1.8" />
+      <module name="smart-class-web" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

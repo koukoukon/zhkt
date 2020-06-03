@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/smart-class/smart-class.iml" filepath="$PROJECT_DIR$/smart-class/smart-class.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smart-class/smart-class-domain/smart-class-domain.iml" filepath="$PROJECT_DIR$/smart-class/smart-class-domain/smart-class-domain.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smart-class/smart-class-mapper/smart-class-mapper.iml" filepath="$PROJECT_DIR$/smart-class/smart-class-mapper/smart-class-mapper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smart-class-parent/smart-class-parent.iml" filepath="$PROJECT_DIR$/smart-class-parent/smart-class-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smart-class/smart-class-service/smart-class-service.iml" filepath="$PROJECT_DIR$/smart-class/smart-class-service/smart-class-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smart-class/smart-class-web/smart-class-web.iml" filepath="$PROJECT_DIR$/smart-class/smart-class-web/smart-class-web.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="smart-class:war">
+    <output-path>$PROJECT_DIR$/smart-class/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>smart-class</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="smart-class.war">
+      <element id="artifact" artifact-name="smart-class:war exploded" />
+    </root>
+  </artifact>
+</component>

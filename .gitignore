@@ -1,0 +1,5 @@
+# Project exclude paths
+/smart-class/smart-class-domain/target/
+/smart-class/smart-class-mapper/target/
+/smart-class/smart-class-service/target/
+/smart-class/smart-class-web/target/
