@@ -53,28 +53,28 @@
     <!--@mbg.generated-->
     insert into `system_user`
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="userName != null">
+      <if test="userName != null and userName != ''">
         user_name,
       </if>
-      <if test="userPassword != null">
+      <if test="userPassword != null and userPassword != ''">
         user_password,
       </if>
-      <if test="userPhone != null">
+      <if test="userPhone != null and userPhone != ''">
         user_phone,
       </if>
-      <if test="userNumber != null">
+      <if test="userNumber != null and userNumber != ''">
         user_number,
       </if>
       <if test="organizationPid != null">
         organization_pid,
       </if>
-      <if test="rolePid != null">
+      <if test="rolePid != null and rolePid != ''">
         role_pid,
       </if>
-      <if test="userStatus != null">
+      <if test="userStatus != null and userStatus != ''">
         user_status,
       </if>
-      <if test="userDeleteFlag != null">
+      <if test="userDeleteFlag != null and userDeleteFlag != ''">
         user_delete_flag,
       </if>
       <if test="userCreateUserPid != null">
@@ -91,28 +91,28 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="userName != null">
+      <if test="userName != null and userName != ''">
         #{userName,jdbcType=VARCHAR},
       </if>
-      <if test="userPassword != null">
+      <if test="userPassword != null and userPassword != ''">
         #{userPassword,jdbcType=VARCHAR},
       </if>
-      <if test="userPhone != null">
+      <if test="userPhone != null and userPhone != ''">
         #{userPhone,jdbcType=VARCHAR},
       </if>
-      <if test="userNumber != null">
+      <if test="userNumber != null and userNumber != ''">
         #{userNumber,jdbcType=VARCHAR},
       </if>
       <if test="organizationPid != null">
         #{organizationPid,jdbcType=INTEGER},
       </if>
-      <if test="rolePid != null">
+      <if test="rolePid != null and rolePid != ''">
         #{rolePid,jdbcType=VARCHAR},
       </if>
-      <if test="userStatus != null">
+      <if test="userStatus != null and userStatus != ''">
         #{userStatus,jdbcType=VARCHAR},
       </if>
-      <if test="userDeleteFlag != null">
+      <if test="userDeleteFlag != null and userDeleteFlag != ''">
         #{userDeleteFlag,jdbcType=VARCHAR},
       </if>
       <if test="userCreateUserPid != null">
@@ -133,28 +133,28 @@
     <!--@mbg.generated-->
     update `system_user`
     <set>
-      <if test="userName != null">
+      <if test="userName != null and userName != ''">
         user_name = #{userName,jdbcType=VARCHAR},
       </if>
-      <if test="userPassword != null">
+      <if test="userPassword != null and userPassword != ''">
         user_password = #{userPassword,jdbcType=VARCHAR},
       </if>
-      <if test="userPhone != null">
+      <if test="userPhone != null and userPhone != ''">
         user_phone = #{userPhone,jdbcType=VARCHAR},
       </if>
-      <if test="userNumber != null">
+      <if test="userNumber != null and userNumber != ''">
         user_number = #{userNumber,jdbcType=VARCHAR},
       </if>
       <if test="organizationPid != null">
         organization_pid = #{organizationPid,jdbcType=INTEGER},
       </if>
-      <if test="rolePid != null">
+      <if test="rolePid != null and rolePid != ''">
         role_pid = #{rolePid,jdbcType=VARCHAR},
       </if>
-      <if test="userStatus != null">
+      <if test="userStatus != null and userStatus != ''">
         user_status = #{userStatus,jdbcType=VARCHAR},
       </if>
-      <if test="userDeleteFlag != null">
+      <if test="userDeleteFlag != null and userDeleteFlag != ''">
         user_delete_flag = #{userDeleteFlag,jdbcType=VARCHAR},
       </if>
       <if test="userCreateUserPid != null">
@@ -188,5 +188,7 @@
       user_edit_user_pid = #{userEditUserPid,jdbcType=INTEGER},
       user_edit_date = #{userEditDate,jdbcType=TIMESTAMP}
     where user_id = #{userId,jdbcType=INTEGER}
-  </update>
+  </update><select id="listUsers" resultMap="BaseResultMap">
+  select * from system_user
+</select>
 </mapper>

@@ -5,6 +5,9 @@ import javax.annotation.Resource;
 import me.hibiki.system.mapper.UserMapper;
 import me.hibiki.system.domain.User;
 import me.hibiki.system.service.UserService;
+
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService{
 
@@ -41,4 +44,8 @@ public class UserServiceImpl implements UserService{
         return userMapper.updateByPrimaryKey(record);
     }
 
+    @Override
+    public List<User> listUsers() {
+        return userMapper.listUsers();
+    }
 }

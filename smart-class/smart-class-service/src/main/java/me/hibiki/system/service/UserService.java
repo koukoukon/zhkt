@@ -1,6 +1,9 @@
 package me.hibiki.system.service;
 
 import me.hibiki.system.domain.User;
+
+import java.util.List;
+
 public interface UserService{
 
 
@@ -15,5 +18,6 @@ public interface UserService{
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+    List<User> listUsers();
 
 }
