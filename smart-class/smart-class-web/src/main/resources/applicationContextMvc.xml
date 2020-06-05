@@ -6,12 +6,13 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/mvc
        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    <mvc:resources mapping="/login.html" location="/"/>
     <mvc:resources mapping="/admin/*.html" location="/admin/"/>
-    <mvc:resources mapping="/admin/css/*.css" location="/admin/css/"/>
-    <mvc:resources mapping="/admin/fonts/**" location="/admin/fonts/"/>
-    <mvc:resources mapping="/admin/images/**" location="/admin/images/"/>
-    <mvc:resources mapping="/admin/js/*.js" location="/admin/js/"/>
-    <mvc:resources mapping="/admin/lib/**" location="/admin/lib/"/>
+    <mvc:resources mapping="/css/**" location="/css/"/>
+    <mvc:resources mapping="/fonts/**" location="/fonts/"/>
+    <mvc:resources mapping="/images/**" location="/images/"/>
+    <mvc:resources mapping="/js/**" location="/js/"/>
+    <mvc:resources mapping="/lib/**" location="/lib/"/>
     <mvc:annotation-driven>
         <mvc:message-converters>
             <bean class="org.springframework.http.converter.json.GsonHttpMessageConverter">

@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.hibiki.system.mapper.SystemMenuMapper">
+    <resultMap id="BaseResultMap" type="me.hibiki.system.domain.SystemMenu">
+        <!--@mbg.generated-->
+        <!--@Table system_menu-->
+        <id column="menu_id" jdbcType="INTEGER" property="menuId"/>
+        <result column="menu_name" jdbcType="VARCHAR" property="menuName"/>
+        <result column="menu_pid" jdbcType="INTEGER" property="menuPid"/>
+        <result column="menu_num" jdbcType="VARCHAR" property="menuNum"/>
+        <result column="menu_url" jdbcType="VARCHAR" property="menuUrl"/>
+        <result column="menu_target" jdbcType="INTEGER" property="menuTarget"/>
+        <result column="menu_min_icon" jdbcType="VARCHAR" property="menuMinIcon"/>
+        <result column="menu_max_icon" jdbcType="VARCHAR" property="menuMaxIcon"/>
+        <result column="menu_show" jdbcType="INTEGER" property="menuShow"/>
+        <result column="menu_order" jdbcType="TINYINT" property="menuOrder"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        menu_id, menu_name, menu_pid, menu_num, menu_url, menu_target, menu_min_icon, menu_max_icon,
+        menu_show, menu_order
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+    select 
+
+        <include refid="Base_Column_List"/>
+
+    from system_menu
+    where menu_id = #{menuId,jdbcType=INTEGER}
+
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--@mbg.generated-->
+    delete from system_menu
+    where menu_id = #{menuId,jdbcType=INTEGER}
+
+    </delete>
+    <insert id="insert" keyColumn="menu_id" keyProperty="menuId" parameterType="me.hibiki.system.domain.SystemMenu"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+    insert into system_menu (menu_name, menu_pid, menu_num, 
+      menu_url, menu_target, menu_min_icon, 
+      menu_max_icon, menu_show, menu_order
+      )
+    values (#{menuName,jdbcType=VARCHAR}, #{menuPid,jdbcType=INTEGER}, #{menuNum,jdbcType=VARCHAR}, 
+      #{menuUrl,jdbcType=VARCHAR}, #{menuTarget,jdbcType=INTEGER}, #{menuMinIcon,jdbcType=VARCHAR}, 
+      #{menuMaxIcon,jdbcType=VARCHAR}, #{menuShow,jdbcType=INTEGER}, #{menuOrder,jdbcType=TINYINT}
+      )
+
+    </insert>
+    <insert id="insertSelective" keyColumn="menu_id" keyProperty="menuId"
+            parameterType="me.hibiki.system.domain.SystemMenu" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+    insert into system_menu
+
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="menuName != null and menuName != ''">
+                menu_name,
+
+            </if>
+            <if test="menuPid != null">
+
+        menu_pid,
+
+            </if>
+            <if test="menuNum != null and menuNum != ''">
+
+        menu_num,
+
+            </if>
+            <if test="menuUrl != null and menuUrl != ''">
+
+        menu_url,
+
+            </if>
+            <if test="menuTarget != null">
+
+        menu_target,
+
+            </if>
+            <if test="menuMinIcon != null and menuMinIcon != ''">
+
+        menu_min_icon,
+
+            </if>
+            <if test="menuMaxIcon != null and menuMaxIcon != ''">
+
+        menu_max_icon,
+
+            </if>
+            <if test="menuShow != null">
+
+        menu_show,
+
+            </if>
+            <if test="menuOrder != null">
+
+        menu_order,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="menuName != null and menuName != ''">
+                #{menuName,jdbcType=VARCHAR},
+
+            </if>
+            <if test="menuPid != null">
+
+        #{menuPid,jdbcType=INTEGER},
+
+            </if>
+            <if test="menuNum != null and menuNum != ''">
+
+        #{menuNum,jdbcType=VARCHAR},
+
+            </if>
+            <if test="menuUrl != null and menuUrl != ''">
+
+        #{menuUrl,jdbcType=VARCHAR},
+
+            </if>
+            <if test="menuTarget != null">
+
+        #{menuTarget,jdbcType=INTEGER},
+
+            </if>
+            <if test="menuMinIcon != null and menuMinIcon != ''">
+
+        #{menuMinIcon,jdbcType=VARCHAR},
+
+            </if>
+            <if test="menuMaxIcon != null and menuMaxIcon != ''">
+
+        #{menuMaxIcon,jdbcType=VARCHAR},
+
+            </if>
+            <if test="menuShow != null">
+
+        #{menuShow,jdbcType=INTEGER},
+
+            </if>
+            <if test="menuOrder != null">
+
+        #{menuOrder,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="me.hibiki.system.domain.SystemMenu">
+        <!--@mbg.generated-->
+    update system_menu
+
+        <set>
+            <if test="menuName != null and menuName != ''">
+                menu_name = #{menuName,jdbcType=VARCHAR},
+
+            </if>
+            <if test="menuPid != null">
+
+        menu_pid = #{menuPid,jdbcType=INTEGER},
+
+            </if>
+            <if test="menuNum != null and menuNum != ''">
+
+        menu_num = #{menuNum,jdbcType=VARCHAR},
+
+            </if>
+            <if test="menuUrl != null and menuUrl != ''">
+
+        menu_url = #{menuUrl,jdbcType=VARCHAR},
+
+            </if>
+            <if test="menuTarget != null">
+
+        menu_target = #{menuTarget,jdbcType=INTEGER},
+
+            </if>
+            <if test="menuMinIcon != null and menuMinIcon != ''">
+
+        menu_min_icon = #{menuMinIcon,jdbcType=VARCHAR},
+
+            </if>
+            <if test="menuMaxIcon != null and menuMaxIcon != ''">
+
+        menu_max_icon = #{menuMaxIcon,jdbcType=VARCHAR},
+
+            </if>
+            <if test="menuShow != null">
+
+        menu_show = #{menuShow,jdbcType=INTEGER},
+
+            </if>
+            <if test="menuOrder != null">
+
+        menu_order = #{menuOrder,jdbcType=TINYINT},
+            </if>
+        </set>
+
+    where menu_id = #{menuId,jdbcType=INTEGER}
+
+    </update>
+    <update id="updateByPrimaryKey" parameterType="me.hibiki.system.domain.SystemMenu">
+        <!--@mbg.generated-->
+    update system_menu
+    set menu_name = #{menuName,jdbcType=VARCHAR},
+      menu_pid = #{menuPid,jdbcType=INTEGER},
+      menu_num = #{menuNum,jdbcType=VARCHAR},
+      menu_url = #{menuUrl,jdbcType=VARCHAR},
+      menu_target = #{menuTarget,jdbcType=INTEGER},
+      menu_min_icon = #{menuMinIcon,jdbcType=VARCHAR},
+      menu_max_icon = #{menuMaxIcon,jdbcType=VARCHAR},
+      menu_show = #{menuShow,jdbcType=INTEGER},
+      menu_order = #{menuOrder,jdbcType=TINYINT}
+    where menu_id = #{menuId,jdbcType=INTEGER}
+
+    </update>
+    <select id="listSystemMenus" resultMap="BaseResultMap">
+    select * from system_menu order by menu_order asc
+    </select>
+</mapper>
