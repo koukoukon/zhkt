@@ -8,6 +8,7 @@
        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
     <mvc:resources mapping="/login.html" location="/"/>
     <mvc:resources mapping="/admin/*.html" location="/admin/"/>
+    <mvc:resources mapping="/admin/role/*.html" location="/admin/role/" order="0"/>
     <mvc:resources mapping="/css/**" location="/css/"/>
     <mvc:resources mapping="/fonts/**" location="/fonts/"/>
     <mvc:resources mapping="/images/**" location="/images/"/>

@@ -48,4 +48,6 @@ public class SystemMenuServiceImpl implements SystemMenuService{
     public List<SystemMenu> listSystemMenus() {
         return systemMenuMapper.listSystemMenus();
     }
+
+
 }

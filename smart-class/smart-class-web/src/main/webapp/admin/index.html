@@ -59,7 +59,6 @@
 
         .ztree.showIcon li a span.button.switch {
             visibility: visible;
-            margin-right: 10px
         }
 
         .ztree li a.curSelectedNode {
@@ -257,7 +256,7 @@ var _hmt = _hmt || [];
     //     "menuName": "角色管理",
     //     "menuPid": 1,
     //     "menuNum": "1001001",
-    //     "menuUrl": "role/list.html",
+    //     "menuUrl": "role/manage.html",
     //     "menuTarget": 0,
     //     "menuShow": 0,
     //     "menuOrder": 1
@@ -302,7 +301,7 @@ var _hmt = _hmt || [];
     //     "menuName": "用户管理",
     //     "menuPid": 1,
     //     "menuNum": "1001002",
-    //     "menuUrl": "user/list.html",
+    //     "menuUrl": "user/manage.html",
     //     "menuTarget": 0,
     //     "menuShow": 0,
     //     "menuOrder": 2
@@ -350,7 +349,13 @@ var _hmt = _hmt || [];
 
     function beforeClick(treeId, treeNode) {
         if (treeNode["menuUrl"]&&treeNode["menuUrl"]!="#") {
-            xadmin.add_tab(treeNode["menuName"], treeNode["menuUrl"])
+            let url =treeNode["menuUrl"];
+            if (url.indexOf("?")>-1){
+                url += "&date="+new Date().getTime();
+            }else {
+                url +="?date="+new Date().getTime();
+            }
+            xadmin.add_tab(treeNode["menuId"],treeNode["menuName"], url)
         } else {
             var zTree = $.fn.zTree.getZTreeObj("treeDemo");
             zTree.expandNode(treeNode);
@@ -363,7 +368,7 @@ var _hmt = _hmt || [];
         $.fn.zTree.init(treeObj, setting);
         zTree_Menu = $.fn.zTree.getZTreeObj("treeDemo");
         // curMenu = zTree_Menu.getNodes()[0].children[0].children[0];
-        zTree_Menu.selectNode(curMenu);
+        // zTree_Menu.selectNode(curMenu);
 
         treeObj.hover(function () {
             if (!treeObj.hasClass("showIcon")) {

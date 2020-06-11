@@ -62,7 +62,7 @@
               <value>
                 <TableGenerateConfig>
                   <option name="generatedKey" value="role_id" />
-                  <option name="javaModelName" value="Role" />
+                  <option name="javaModelName" value="SystemRole" />
                   <option name="moduleName" value="smart-class-domain" />
                   <option name="sequenceColumn" value="" />
                   <option name="sequenceId" value="" />
