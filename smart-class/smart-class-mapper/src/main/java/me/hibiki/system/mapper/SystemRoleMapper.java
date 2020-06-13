@@ -14,4 +14,5 @@ public interface SystemRoleMapper {
     int updateSystemRoleById(SystemRole record);
 
     List<SystemRole> listSystemRoles(SystemRole systemRole);
+
 }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.hibiki.system.mapper.SystemRoleMenuMapper">
+    <select id="listByRolePidRoleMenus" resultType="me.hibiki.system.domain.SystemRoleMenu">
+
+    SELECT
+	m.menu_id,
+	m.menu_pid,
+	m.menu_name,
+	rm.role_pid as checked
+FROM
+	system_menu m
+	LEFT JOIN ( SELECT * FROM system_role_menu WHERE role_pid = #{rolePid,jdbcType=INTEGER} ) rm ON m.menu_id = rm.menu_pid
+ORDER BY
+	m.menu_order ASC
+
+    </select>
+    <insert id="insertByList">
+    insert into system_role_menu (role_pid,menu_pid) values
+    <foreach collection="menuPids" item="menuId" open="(" close=")" separator="),(">
+    #{rolePid,jdbcType=INTEGER},#{menuId,jdbcType=INTEGER}
+    </foreach>
+    </insert>
+    <delete id="deleteRoleMenuByRolePid">
+    delete from system_role_menu where role_pid = #{rolePid,jdbcType=INTEGER}
+</delete>
+
+</mapper>

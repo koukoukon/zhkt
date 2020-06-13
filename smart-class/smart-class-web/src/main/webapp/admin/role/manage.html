@@ -121,7 +121,6 @@
     var layer, table, roleTableObject;
     $(function () {
         $("#searchButton").click(search);
-
     })
 
     function search() {
@@ -161,7 +160,8 @@
     });
 
     function editRole() {
-        let roleId = $(this).attr("data-roleId");
+        let roleId = $(this).attr("data-edit-id");
+        console.log(roleId);
         layer.open({
             type: 2,
             title: "编辑角色",
@@ -194,6 +194,53 @@
             layer.close(index);
             table.reload("roleTable");
         });
+    }
+    function editRoleStatus(){
+        let roleId = $(this).attr("data-status-id");
+        let roleStatus = $(this).attr("data-status");
+        var warMsg = "确定是否要启用该角色?";
+        if(roleStatus==0){
+            warMsg = "确定要禁用该角色?"
+            roleStatus = 1;
+        }else{
+            roleStatus = 0;
+        }
+        layer.confirm(warMsg, {icon: 3, title:'系统提示', offset: '20px',}, function(index){
+            $.ajax({
+                type: "put",
+                url: "./"+roleId,
+                data: {
+                    "roleStatus":roleStatus
+                },
+                success: function(data){
+                    if(data["success"]==1){
+                        layer.msg("禁用角色成功");
+                        layer.close(index);
+                        table.reload("roleTable");
+                    }
+                }
+            });
+        });
+    }
+    function roleGrant(){
+        let roleId = $(this).attr("data-grant-id");
+            layer.open({
+                type: 2,
+                title: "角色授权",
+                content: "grant.html",
+                btn: ["确定","取消"],
+                shade: 0.8,
+                area: ["480px", "540px"],
+                offset: "20px",
+                yes: function (index, layero) {
+                    var iframeWin = window[layero.find('iframe')[0]['name']];
+                    iframeWin.roleGrant(roleId,index);
+                },
+                success: function (layero, index) {
+                    var iframeWin = window[layero.find('iframe')[0]['name']];
+                    iframeWin.initTree(roleId);
+                }
+            });
     }
 
     layui.use('table', function () {
@@ -228,14 +275,14 @@
                 , {
                     field: 'roleStatus', title: '状态', width: 90, templet: function (data) {
                         if (data["roleStatus"] == 0) {
-                            return "<span class='layui-btn layui-btn-normal layui-btn-mini'>已启用</span></td>";
+                            return "<span data-status-id="+data["roleId"]+" data-status="+data["roleStatus"]+" class='layui-btn layui-btn-normal layui-btn-mini'>已启用</span>";
                         } else {
-                            return "<span class='layui-btn layui-btn-danger layui-btn-mini '>已禁用</span></td>";
+                            return "<span data-status-id="+data["roleId"]+" data-status="+data["roleStatus"]+" class='layui-btn layui-btn-danger layui-btn-mini '>已禁用</span>";
                         }
                     }
                 }
                 , {
-                    field: 'roleId', title: '操作', width: 80, templet: function (data) {
+                    field: 'roleId', title: '操作', width: 80,align:"center", templet: function (data) {
                         if (data["roleDefault"]==1){
                             return "";
                         }
@@ -244,11 +291,23 @@
                         return editButton + deleteButton;
                     }
                 }
+                , {
+                    field: 'roleId', title: '授权', width: 80,align:"center", templet: function (data) {
+                        if (data["roleDefault"]==1){
+                            return "";
+                        }
+                        let button = "<a title='授权' data-grant-id='" + data["roleId"] + "'href='javascript:;'><i class='layui-icon'>&#xe614;</i></a>";
+
+                        return button;
+                    }
+                }
 
             ]],
             done: function () {
                 $("a[data-edit-id]").click(editRole);
                 $("a[data-delete-id]").click(deleteRole);
+                $("span[data-status-id]").click(editRoleStatus)
+                $("a[data-grant-id]").click(roleGrant)
             }
         });
     });

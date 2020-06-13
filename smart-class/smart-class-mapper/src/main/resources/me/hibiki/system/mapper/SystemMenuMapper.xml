@@ -216,4 +216,5 @@
     <select id="listSystemMenus" resultMap="BaseResultMap">
     select * from system_menu order by menu_order asc
     </select>
+
 </mapper>

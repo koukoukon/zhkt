@@ -65,14 +65,10 @@ public class SystemRoleController {
     }
 
     @PutMapping(path = "/{roleId}")
-    public Map<String, Integer> editUser(@PathVariable Integer roleId, String roleName, String roleDescription) {
-        System.out.println("--------------------------" + roleName);
-        SystemRole systemRole = new SystemRole();
+    public Map<String, Integer> editUser(@PathVariable Integer roleId,SystemRole systemRole) {
         systemRole.setRoleId(roleId);
-        systemRole.setRoleName(roleName);
-        systemRole.setRoleDescription(roleDescription);
         systemRole.setRoleEditDate(new Date());
-        System.out.println("角色详情：" + systemRole);
+        System.out.println(systemRole.getRoleStatus());
         int i = systemRoleService.updateSystemRoleById(systemRole);
         Map<String, Integer> map = new HashMap<>();
         map.put("success", i);
@@ -86,4 +82,5 @@ public class SystemRoleController {
         map.put("success", i);
         return map;
     }
+
 }

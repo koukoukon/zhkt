@@ -19,4 +19,5 @@ public interface SystemMenuService{
 
     int updateByPrimaryKey(SystemMenu record);
     List<SystemMenu> listSystemMenus();
+
 }

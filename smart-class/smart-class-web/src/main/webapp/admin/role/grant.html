@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html class="x-admin-sm">
+
+<head>
+    <meta charset="UTF-8">
+    <title>欢迎页面-X-admin2.2</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
+    <link rel="stylesheet" href="../../css/font.css">
+    <link rel="stylesheet" href="../../css/xadmin.css">
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../js/xadmin.js"></script>
+    <link rel="stylesheet" href="../../css/metroStyle/metroStyle.css" type="text/css">
+    <script type="text/javascript" src="../../js/jquery.ztree.core.js"></script>
+    <script type="text/javascript" src="../../js/jquery.ztree.excheck.js"></script>
+    <script>
+
+    </script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]--></head>
+
+<body class="index">
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body ">
+                    <ul id="treeDemo" class="ztree"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var treeObj;
+
+    function initTree(roleId) {
+        var setting = {
+            async: {
+                enable: true,
+                type: "get",
+                url: "../roleMenu",
+                otherParam: {"roleId": roleId}
+            },
+            view: {
+                selectedMulti: false
+            },
+            check: {
+                enable: true,
+                chkStyle: "checkbox",
+                chkboxType: {"Y": "ps", "N": "ps"}
+            },
+            data: {
+                key: {
+                    name: "menuName"
+                },
+                simpleData: {
+                    enable: true,
+                    idKey: "menuId",
+                    pIdKey: "menuPid",
+                    rootPId: 0
+                }
+            },
+            callback: {
+                onAsyncSuccess: function () {
+                    treeObj.expandAll(true);
+                }
+            }
+        };
+
+        treeObj = $.fn.zTree.init($("#treeDemo"), setting);
+    }
+
+    function roleGrant(roleId,index) {
+        let checkedNodes = treeObj.getCheckedNodes(true);
+        let menuIds = [];
+        for (var i in checkedNodes) {
+            menuIds.push(checkedNodes[i]["menuId"].toString());
+        }
+        let requestData = {"roleId": roleId, "menuIds": menuIds};
+        console.log(requestData);
+        $.ajax({
+            url: "../roleMenu",
+            dataType: "json",
+            type:"post",
+            contentType: "application/json;charset=utf-8",
+            data: JSON.stringify(requestData),
+            success: function (data) {
+                console.debug(data["success"]);
+                console.debug(menuIds.length);
+                if (data["success"]==menuIds.length){
+                    parent.layer.msg("角色授权成功");
+                    parent.layer.close(index);
+                    parent.table.reload("roleTable");
+                }
+            }
+        })
+    }
+</script>
+</body>
+
+</html>

@@ -1,11 +1,11 @@
 package me.hibiki.system.service.impl;
 
-import org.springframework.stereotype.Service;
-import javax.annotation.Resource;
-import me.hibiki.system.mapper.SystemMenuMapper;
 import me.hibiki.system.domain.SystemMenu;
+import me.hibiki.system.mapper.SystemMenuMapper;
 import me.hibiki.system.service.SystemMenuService;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @Service
@@ -48,6 +48,5 @@ public class SystemMenuServiceImpl implements SystemMenuService{
     public List<SystemMenu> listSystemMenus() {
         return systemMenuMapper.listSystemMenus();
     }
-
 
 }
