@@ -25,8 +25,5 @@ public class SystemMenuController {
     public List<SystemMenu> listSystemMenus() {
         return systemMenuService.listSystemMenus();
     }
-    @PostMapping(path = "grant")
-    public Map<String,Integer> roleGrant(Integer roleId, String menuIds){
-        return  null;
-    }
+
 }

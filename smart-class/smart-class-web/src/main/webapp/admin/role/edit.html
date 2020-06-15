@@ -13,41 +13,7 @@
     <script type="text/javascript" src="../../js/jquery-1.4.4.min.js"></script>
     <script type="text/javascript" src="../../lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="../../js/xadmin.js"></script>
-    <script>
-        function loadPageByRoleId(roleId) {
-            $("#roleId").val(roleId);
-            $.ajax({
-                url:"./"+roleId,
-                type:"get",
-                success:function (data) {
-                    $("#roleName").val(data["data"]["roleName"]);
-                    $("#roleDescription").val(data["data"]["roleDescription"]);
-                }
-            })
-        }
-        function editRole(index) {
-            let roleName = $("#roleName").val();
-            let roleDescription = $("#roleDescription").val();
-            $.ajax({
-                    url: "./"+$("#roleId").val(),
-                    data: {
-                        // "_method":"PUT",
-                        "roleName": roleName,
-                        "roleDescription": roleDescription,
-                    },
-                    type: "put",
-                    dataType:"json",
-                    success: function (data) {
-                        if (data["success"]==1){
-                            parent.layer.msg("数据修改成功");
-                            parent.layer.close(index);
-                            parent.table.reload("roleTable");
-                        }
-                    }
-                }
-            )
-        }
-    </script>
+
     <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
     <!--[if lt IE 9]>
     <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
@@ -77,7 +43,41 @@
         </form>
     </div>
 </div>
-
+<script>
+    function loadPageByDataId(dataId) {
+        $("#roleId").val(dataId);
+        $.ajax({
+            url:"./"+dataId,
+            type:"get",
+            success:function (data) {
+                $("#roleName").val(data["roleName"]);
+                $("#roleDescription").val(data["roleDescription"]);
+            }
+        })
+    }
+    function edit(index) {
+        let roleName = $("#roleName").val();
+        let roleDescription = $("#roleDescription").val();
+        $.ajax({
+                url: "./"+$("#roleId").val(),
+                data: {
+                    // "_method":"PUT",
+                    "roleName": roleName,
+                    "roleDescription": roleDescription,
+                },
+                type: "put",
+                dataType:"json",
+                success: function (data) {
+                    if (data["success"]>0){
+                        parent.layer.msg("数据修改成功");
+                        parent.layer.close(index);
+                        parent.table.reload("dataTable");
+                    }
+                }
+            }
+        )
+    }
+</script>
 </body>
 
 </html>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.hibiki.system.mapper.SystemUserMapper">
+    <resultMap id="BaseResultMap" type="me.hibiki.system.domain.SystemUser">
+        <id column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="user_password" jdbcType="VARCHAR" property="userPassword"/>
+        <result column="user_phone" jdbcType="VARCHAR" property="userPhone"/>
+        <result column="user_number" jdbcType="VARCHAR" property="userNumber"/>
+        <result column="organization_pid" jdbcType="INTEGER" property="organizationPid"/>
+        <result column="role_pid" jdbcType="VARCHAR" property="rolePid"/>
+        <result column="user_status" jdbcType="VARCHAR" property="userStatus"/>
+        <result column="user_delete_flag" jdbcType="VARCHAR" property="userDeleteFlag"/>
+        <result column="user_create_user_pid" jdbcType="INTEGER" property="userCreateUserPid"/>
+        <result column="user_create_date" jdbcType="TIMESTAMP" property="userCreateDate"/>
+        <result column="user_edit_user_pid" jdbcType="INTEGER" property="userEditUserPid"/>
+        <result column="user_edit_date" jdbcType="TIMESTAMP" property="userEditDate"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        user_id, user_name, user_password, user_phone, user_number, organization_pid, role_pid,
+        user_status, user_delete_flag, user_create_user_pid, user_create_date, user_edit_user_pid,
+        user_edit_date
+    </sql>
+    <select id="getSystemUserByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+    select
+        <include refid="Base_Column_List"/>
+    from system_user
+    where user_id = #{userId,jdbcType=INTEGER}
+    </select>
+    <update id="updateByPrimaryKeySelective" parameterType="me.hibiki.system.domain.SystemUser">
+        <!--@mbg.generated-->
+    update `system_user`
+        <set>
+            <if test="userName != null and userName != ''">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="userPassword != null and userPassword != ''">
+        user_password = #{userPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="userPhone != null and userPhone != ''">
+        user_phone = #{userPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="userNumber != null and userNumber != ''">
+        user_number = #{userNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="organizationPid != null">
+        organization_pid = #{organizationPid,jdbcType=INTEGER},
+            </if>
+            <if test="rolePid != null and rolePid != ''">
+        role_pid = #{rolePid,jdbcType=VARCHAR},
+            </if>
+            <if test="userStatus != null and userStatus != ''">
+        user_status = #{userStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="userDeleteFlag != null and userDeleteFlag != ''">
+        user_delete_flag = #{userDeleteFlag,jdbcType=VARCHAR},
+            </if>
+            <if test="userCreateUserPid != null">
+        user_create_user_pid = #{userCreateUserPid,jdbcType=INTEGER},
+            </if>
+            <if test="userCreateDate != null">
+        user_create_date = #{userCreateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userEditUserPid != null">
+        user_edit_user_pid = #{userEditUserPid,jdbcType=INTEGER},
+            </if>
+            <if test="userEditDate != null">
+        user_edit_date = #{userEditDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where user_id = #{userId,jdbcType=INTEGER}
+    </update>
+
+    <select id="listSystemUsers" resultMap="BaseResultMap">
+        select * from system_user where user_delete_flag  = 0
+    </select>
+    <select id="getUserByLogin" resultMap="BaseResultMap">
+        select * from system_user where user_name = #{userName,jdbcType=VARCHAR} and user_password = #{userPassword,jdbcType=VARCHAR}
+    </select>
+    <update id="deleteSystemUserByUserId">
+    update system_user set user_delete_flag = 1 where user_id = #{userId,jdbcType=INTEGER}
+    </update>
+    <insert id="insertSystemUser" keyColumn="user_id" keyProperty="userId"
+            parameterType="me.hibiki.system.domain.SystemUser" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+            insert into system_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userName != null and userName != ''">
+                user_name,
+            </if>
+            <if test="userPassword != null and userPassword != ''">
+                user_password,
+            </if>
+            <if test="userPhone != null and userPhone != ''">
+                user_phone,
+            </if>
+            <if test="userNumber != null and userNumber != ''">
+                user_number,
+            </if>
+            <if test="organizationPid != null">
+                organization_pid,
+            </if>
+            <if test="rolePid != null and rolePid != ''">
+                role_pid,
+            </if>
+            <if test="userStatus != null and userStatus != ''">
+                user_status,
+            </if>
+            <if test="userDeleteFlag != null and userDeleteFlag != ''">
+                user_delete_flag,
+            </if>
+            <if test="userCreateUserPid != null">
+                user_create_user_pid,
+            </if>
+            <if test="userCreateDate != null">
+                user_create_date,
+            </if>
+            <if test="userEditUserPid != null">
+                user_edit_user_pid,
+            </if>
+            <if test="userEditDate != null">
+                user_edit_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userName != null and userName != ''">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="userPassword != null and userPassword != ''">
+                #{userPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="userPhone != null and userPhone != ''">
+                #{userPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="userNumber != null and userNumber != ''">
+                #{userNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="organizationPid != null">
+                #{organizationPid,jdbcType=INTEGER},
+            </if>
+            <if test="rolePid != null and rolePid != ''">
+                #{rolePid,jdbcType=VARCHAR},
+            </if>
+            <if test="userStatus != null and userStatus != ''">
+                #{userStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="userDeleteFlag != null and userDeleteFlag != ''">
+                #{userDeleteFlag,jdbcType=VARCHAR},
+            </if>
+            <if test="userCreateUserPid != null">
+                #{userCreateUserPid,jdbcType=INTEGER},
+            </if>
+            <if test="userCreateDate != null">
+                #{userCreateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userEditUserPid != null">
+                #{userEditUserPid,jdbcType=INTEGER},
+            </if>
+            <if test="userEditDate != null">
+                #{userEditDate,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+</mapper>

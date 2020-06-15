@@ -13,29 +13,7 @@
     <script type="text/javascript" src="../../js/jquery-1.4.4.min.js"></script>
     <script type="text/javascript" src="../../lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="../../js/xadmin.js"></script>
-    <script>
-        function addRole(index) {
-            let roleName = $("#roleName").val();
-            let roleDescription = $("#roleDescription").val();
-            $.ajax({
-                    url: "./",
-                    data: {
-                        "roleName": roleName,
-                        "roleDescription": roleDescription,
-                    },
-                    type: "post",
-                    success: function (data) {
-                        console.log(data);
-                        if (data["success"]==1){
-                            parent.layer.msg("数据添加成功");
-                            parent.layer.close(index);
-                            parent.table.reload("roleTable");
-                        }
-                    }
-                }
-            )
-        }
-    </script>
+
     <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
     <!--[if lt IE 9]>
     <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
@@ -64,7 +42,28 @@
         </form>
     </div>
 </div>
-
+<script>
+    function add(index) {
+        let roleName = $("#roleName").val();
+        let roleDescription = $("#roleDescription").val();
+        $.ajax({
+                url: "./",
+                data: {
+                    "roleName": roleName,
+                    "roleDescription": roleDescription,
+                },
+                type: "post",
+                success: function (data) {
+                    if (data["success"]>0){
+                        parent.layer.msg("数据添加成功");
+                        parent.layer.close(index);
+                        parent.table.reload("dataTable");
+                    }
+                }
+            }
+        )
+    }
+</script>
 </body>
 
 </html>

@@ -78,6 +78,11 @@
     }
 
     function roleGrant(roleId,index) {
+        if (treeObj.getChangeCheckedNodes()<1){
+            parent.layer.msg("数据无变化");
+            parent.layer.close(index);
+            return;
+        }
         let checkedNodes = treeObj.getCheckedNodes(true);
         let menuIds = [];
         for (var i in checkedNodes) {

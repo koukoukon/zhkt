@@ -49,23 +49,12 @@ public class SystemRoleController {
     }
 
     @GetMapping(path = "/{roleId}")
-    public Map<String, Object> getSystemRoleById(@PathVariable Integer roleId) {
-        SystemRole systemRole = systemRoleService.getSystemById(roleId);
-        Map<String, Object> map = new HashMap<>();
-        if (systemRole != null) {
-            map.put("code", 0);
-            map.put("msg", "数据请求成功");
-            map.put("data", systemRole);
-        } else {
-            map.put("code", -1);
-            map.put("msg", "数据请求失败");
-            map.put("data", null);
-        }
-        return map;
+    public SystemRole getSystemRoleById(@PathVariable Integer roleId) {
+        return systemRoleService.getSystemById(roleId);
     }
 
     @PutMapping(path = "/{roleId}")
-    public Map<String, Integer> editUser(@PathVariable Integer roleId,SystemRole systemRole) {
+    public Map<String, Integer> editRole(@PathVariable Integer roleId,SystemRole systemRole) {
         systemRole.setRoleId(roleId);
         systemRole.setRoleEditDate(new Date());
         System.out.println(systemRole.getRoleStatus());

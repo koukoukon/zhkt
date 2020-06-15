@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../../css/xadmin.css">
     <script src="../../lib/layui/layui.js" charset="utf-8"></script>
     <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/smart.js"></script>
     <!--    <script type="text/javascript" src="../../js/xadmin.js"></script>-->
     <!--[if lt IE 9]>
     <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
@@ -41,7 +42,7 @@
                     <button class="layui-btn" id="add"><i class="layui-icon"></i>添加</button>
                 </div>
                 <div class="layui-card-body" id="table_wrap">
-                    <table id="roleTable" lay-filter="test"></table>
+                    <table id="dataTable" lay-filter="test"></table>
                 </div>
             </div>
         </div>
@@ -49,78 +50,13 @@
 </div>
 </body>
 <script>
-    layui.use(['laydate', 'form'], function () {
-        var laydate = layui.laydate;
-        var form = layui.form;
 
-        //执行一个laydate实例
-        laydate.render({
-            elem: '#start' //指定元素
-        });
-
-        //执行一个laydate实例
-        laydate.render({
-            elem: '#end' //指定元素
-        });
-    });
-
-    /*用户-停用*/
-    function member_stop(obj, id) {
-        layer.confirm('确认要停用吗？', function (index) {
-
-            if ($(obj).attr('title') == '启用') {
-
-                //发异步把用户状态进行更改
-                $(obj).attr('title', '停用')
-                $(obj).find('i').html('&#xe62f;');
-
-                $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('已停用');
-                layer.msg('已停用!', {icon: 5, time: 1000});
-
-            } else {
-                $(obj).attr('title', '启用')
-                $(obj).find('i').html('&#xe601;');
-
-                $(obj).parents("tr").find(".td-status").find('span').removeClass('layui-btn-disabled').html('已启用');
-                layer.msg('已启用!', {icon: 5, time: 1000});
-            }
-
-        });
-    }
-
-    /*用户-删除*/
-    function member_del(obj, id) {
-        layer.confirm('确认要删除吗？', function (index) {
-            //发异步删除数据
-            parent.$(obj).parents("tr").remove();
-            layer.msg('已删除!', {icon: 1, time: 1000});
-        });
-    }
-
-
-    function delAll(argument) {
-
-        var data = tableCheck.getData();
-
-        layer.confirm('确认要删除吗？' + data, function (index) {
-            //捉到所有被选中的，发异步进行删除
-            layer.msg('删除成功', {icon: 1});
-            $(".layui-form-checked").not('.header').parents('tr').remove();
-        });
-    }
-</script>
-<script>var _hmt = _hmt || [];
-(function () {
-    var hm = document.createElement("script");
-    hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(hm, s);
-})();</script>
-<script>
-
-    var layer, table, roleTableObject;
     $(function () {
         $("#searchButton").click(search);
+    })
+    $(function () {
+        let initParam = {"tableParam": tableParam};
+        smart.initPage(initParam)
     })
 
     function search() {
@@ -128,7 +64,7 @@
         if (roleStatusValue == null) {
             roleStatusValue = 0;
         }
-        roleTableObject.reload({
+        dataTableObject.reload({
             url: "./",
             where: {
                 "roleName": $("#roleName").val(),
@@ -140,177 +76,124 @@
         })
     }
 
-    layui.use('layer', function () {
-        layer = layui.layer;
-        $("#add").click(function () {
-            layer.open({
-                type: 2,
-                title: "添加角色",
-                content: "add.html",
-                btn: ["确定","取消"],
-                shade: 0.8,
-                area: ["480px", "320px"],
-                offset: "20px",
-                yes: function (index, layero) {
-                    var iframeWin = window[layero.find('iframe')[0]['name']];
-                    iframeWin.addRole(index);
-                }
-            });
-        })
-    });
-
-    function editRole() {
-        let roleId = $(this).attr("data-edit-id");
-        console.log(roleId);
+    function roleGrant() {
+        let roleId = $(this).attr("data-grant-id");
         layer.open({
             type: 2,
-            title: "编辑角色",
-            content: "edit.html",
-            btn: ["确定","取消"],
+            title: "角色授权",
+            content: "grant.html",
+            btn: ["确定", "取消"],
             shade: 0.8,
-            area: ["480px", "320px"],
+            area: ["480px", "540px"],
             offset: "20px",
             yes: function (index, layero) {
                 var iframeWin = window[layero.find('iframe')[0]['name']];
-                iframeWin.editRole(index);
+                iframeWin.roleGrant(roleId, index);
             },
             success: function (layero, index) {
                 var iframeWin = window[layero.find('iframe')[0]['name']];
-                iframeWin.loadPageByRoleId(roleId);
+                iframeWin.initTree(roleId);
             }
         });
     }
-    function deleteRole(){
-        let roleId = $(this).attr("data-delete-id");
-        layer.confirm('确定删除角色？', {icon: 3, title:'提示'}, function(index){
-            $.ajax({
-                url:"./"+roleId,
-                type:"delete",
-                dataType:"json",
-                success:function (data) {
-                    layer.msg("角色删除成功");
-                }
-            })
-            layer.close(index);
-            table.reload("roleTable");
-        });
-    }
-    function editRoleStatus(){
-        let roleId = $(this).attr("data-status-id");
-        let roleStatus = $(this).attr("data-status");
-        var warMsg = "确定是否要启用该角色?";
-        if(roleStatus==0){
-            warMsg = "确定要禁用该角色?"
-            roleStatus = 1;
-        }else{
-            roleStatus = 0;
+
+    let tableParam = {
+        where: {
+            "roleStatus": "-1"
         }
-        layer.confirm(warMsg, {icon: 3, title:'系统提示', offset: '20px',}, function(index){
-            $.ajax({
-                type: "put",
-                url: "./"+roleId,
-                data: {
-                    "roleStatus":roleStatus
-                },
-                success: function(data){
-                    if(data["success"]==1){
-                        layer.msg("禁用角色成功");
-                        layer.close(index);
-                        table.reload("roleTable");
+        , cols: [[ //表头
+            {field: 'roleId', title: 'ID', width: 80, sort: true}
+            , {field: 'roleName', title: '角色名', width: 80}
+            , {
+                field: 'roleDefault', title: '类别', width: 80, templet: function (data) {
+                    if (data["roleDefault"] == 0) {
+                        return "用户创建";
+                    } else {
+                        return "系统内置";
                     }
                 }
+            }
+            , {
+                field: 'roleStatus', title: '状态', width: 90, templet: function (data) {
+                    if (data["roleStatus"] == 0) {
+                        return "<span data-status-id=" + data["roleId"] + " data-status=" + data["roleStatus"] + " class='layui-btn layui-btn-normal layui-btn-mini'>已启用</span>";
+                    } else {
+                        return "<span data-status-id=" + data["roleId"] + " data-status=" + data["roleStatus"] + " class='layui-btn layui-btn-danger layui-btn-mini '>已禁用</span>";
+                    }
+                }
+            }
+            , {
+                field: 'roleId', title: '操作', width: 80, align: "center", templet: function (data) {
+                    if (data["roleDefault"] == 1) {
+                        return "";
+                    }
+                    var editButton = "<a title='编辑' data-edit-id='" + data["roleId"] + "'href='javascript:;'><i class='layui-icon'>&#xe642;</i></a>";
+                    var deleteButton = "<a title='删除' data-delete-id='" + data["roleId"] + "'href='javascript:;'><i class='layui-icon'>&#xe640;</i></a>";
+                    return editButton + deleteButton;
+                }
+            }
+            , {
+                field: 'roleId', title: '授权', width: 80, align: "center", templet: function (data) {
+                    if (data["roleDefault"] == 1) {
+                        return "";
+                    }
+                    let button = "<a title='授权' data-grant-id='" + data["roleId"] + "'href='javascript:;'><i class='layui-icon'>&#xe614;</i></a>";
+                    return button;
+                }
+            }
+
+        ]],
+        done: function () {
+            $("#add").click(function () {
+                smart.open("添加角色", "add.html", 460, 360);
+            })
+            $("a[data-edit-id]").click(function () {
+                let roleId = $(this).attr("data-edit-id");
+                smart.open("编辑角色", "edit.html", 460, 360, roleId);
             });
-        });
-    }
-    function roleGrant(){
-        let roleId = $(this).attr("data-grant-id");
-            layer.open({
-                type: 2,
-                title: "角色授权",
-                content: "grant.html",
-                btn: ["确定","取消"],
-                shade: 0.8,
-                area: ["480px", "540px"],
-                offset: "20px",
-                yes: function (index, layero) {
-                    var iframeWin = window[layero.find('iframe')[0]['name']];
-                    iframeWin.roleGrant(roleId,index);
-                },
-                success: function (layero, index) {
-                    var iframeWin = window[layero.find('iframe')[0]['name']];
-                    iframeWin.initTree(roleId);
+            $("a[data-delete-id]").click(function () {
+                let roleId = $(this).attr("data-delete-id");
+                let ajaxParam = {
+                    url:"./"+roleId,
+                    type:"delete",
+                    dataType:"json",
+                    success:function (data) {
+                        if (data["success"]>0){
+                            layer.msg("删除角色成功");
+                        }else {
+                            layer.msg("删除角色失败");
+                        }
+                    }
                 }
+                smart.confirm("确定删除角色？", "提示", roleId,ajaxParam);
             });
+            $("span[data-status-id]").click(function () {
+                let roleId = $(this).attr("data-status-id");
+                let roleStatus = $(this).attr("data-status");
+                let warMsg = "确定是否要启用该角色?";
+                if (roleStatus == 0) {
+                    warMsg = "确定要禁用该角色?"
+                    roleStatus = 1;
+                } else {
+                    roleStatus = 0;
+                }
+                let ajaxParam = {
+                    type: "put",
+                    url: "./" + roleId,
+                    data: {
+                        "roleStatus": roleStatus
+                    },
+                    success: function (data) {
+                        if (data["success"] > 0) {
+                            layer.msg("禁用角色成功");
+                        }
+                    }
+                };
+                smart.confirm(warMsg, "系统提示", roleId, ajaxParam);
+            })
+            $("a[data-grant-id]").click(roleGrant)
+        }
     }
-
-    layui.use('table', function () {
-        table = layui.table;
-
-        //第一个实例
-        roleTableObject = table.render({
-            elem: '#roleTable'
-            , height: 'full-200'
-            , url: './' //数据接口
-            , request: {
-                pageName: "pageNum",
-                limitName: "pageSize",
-            }
-            , where: {
-                "roleStatus": "-1"
-            }
-            , response: {}
-            , page: true //开启分页
-            , cols: [[ //表头
-                {field: 'roleId', title: 'ID', width: 80, sort: true}
-                , {field: 'roleName', title: '角色名', width: 80}
-                , {
-                    field: 'roleDefault', title: '类别', width: 80, templet: function (data) {
-                        if (data["roleDefault"] == 0) {
-                            return "用户创建";
-                        } else {
-                            return "系统内置";
-                        }
-                    }
-                }
-                , {
-                    field: 'roleStatus', title: '状态', width: 90, templet: function (data) {
-                        if (data["roleStatus"] == 0) {
-                            return "<span data-status-id="+data["roleId"]+" data-status="+data["roleStatus"]+" class='layui-btn layui-btn-normal layui-btn-mini'>已启用</span>";
-                        } else {
-                            return "<span data-status-id="+data["roleId"]+" data-status="+data["roleStatus"]+" class='layui-btn layui-btn-danger layui-btn-mini '>已禁用</span>";
-                        }
-                    }
-                }
-                , {
-                    field: 'roleId', title: '操作', width: 80,align:"center", templet: function (data) {
-                        if (data["roleDefault"]==1){
-                            return "";
-                        }
-                        var editButton = "<a title='编辑' data-edit-id='" + data["roleId"] + "'href='javascript:;'><i class='layui-icon'>&#xe642;</i></a>";
-                        var deleteButton = "<a title='删除' data-delete-id='" + data["roleId"] + "'href='javascript:;'><i class='layui-icon'>&#xe640;</i></a>";
-                        return editButton + deleteButton;
-                    }
-                }
-                , {
-                    field: 'roleId', title: '授权', width: 80,align:"center", templet: function (data) {
-                        if (data["roleDefault"]==1){
-                            return "";
-                        }
-                        let button = "<a title='授权' data-grant-id='" + data["roleId"] + "'href='javascript:;'><i class='layui-icon'>&#xe614;</i></a>";
-
-                        return button;
-                    }
-                }
-
-            ]],
-            done: function () {
-                $("a[data-edit-id]").click(editRole);
-                $("a[data-delete-id]").click(deleteRole);
-                $("span[data-status-id]").click(editRoleStatus)
-                $("a[data-grant-id]").click(roleGrant)
-            }
-        });
-    });
 
 </script>
 </html>
