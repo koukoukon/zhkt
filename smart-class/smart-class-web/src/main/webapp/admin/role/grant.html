@@ -41,7 +41,7 @@
     var treeObj;
 
     function initTree(roleId) {
-        var setting = {
+        let setting = {
             async: {
                 enable: true,
                 type: "get",
@@ -89,7 +89,6 @@
             menuIds.push(checkedNodes[i]["menuId"].toString());
         }
         let requestData = {"roleId": roleId, "menuIds": menuIds};
-        console.log(requestData);
         $.ajax({
             url: "../roleMenu",
             dataType: "json",
@@ -97,8 +96,6 @@
             contentType: "application/json;charset=utf-8",
             data: JSON.stringify(requestData),
             success: function (data) {
-                console.debug(data["success"]);
-                console.debug(menuIds.length);
                 if (data["success"]==menuIds.length){
                     parent.layer.msg("角色授权成功");
                     parent.layer.close(index);

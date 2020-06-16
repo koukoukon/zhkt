@@ -50,13 +50,10 @@
 </div>
 </body>
 <script>
-
-    $(function () {
-        $("#searchButton").click(search);
-    })
     $(function () {
         let initParam = {"tableParam": tableParam};
         smart.initPage(initParam)
+        $("#searchButton").click(search);
     })
 
     function search() {
@@ -64,7 +61,7 @@
         if (roleStatusValue == null) {
             roleStatusValue = 0;
         }
-        dataTableObject.reload({
+        tableObject.reload({
             url: "./",
             where: {
                 "roleName": $("#roleName").val(),
@@ -76,26 +73,6 @@
         })
     }
 
-    function roleGrant() {
-        let roleId = $(this).attr("data-grant-id");
-        layer.open({
-            type: 2,
-            title: "角色授权",
-            content: "grant.html",
-            btn: ["确定", "取消"],
-            shade: 0.8,
-            area: ["480px", "540px"],
-            offset: "20px",
-            yes: function (index, layero) {
-                var iframeWin = window[layero.find('iframe')[0]['name']];
-                iframeWin.roleGrant(roleId, index);
-            },
-            success: function (layero, index) {
-                var iframeWin = window[layero.find('iframe')[0]['name']];
-                iframeWin.initTree(roleId);
-            }
-        });
-    }
 
     let tableParam = {
         where: {
@@ -145,27 +122,45 @@
         ]],
         done: function () {
             $("#add").click(function () {
-                smart.open("添加角色", "add.html", 460, 360);
+                let yesParam = {
+                    yes: function (index, layero) {
+                        let iframeWin = window[layero.find('iframe')[0]['name']];
+                        iframeWin.add(index);
+                    }
+                }
+                smart.open("添加角色", "add.html", 460, 360, yesParam);
             })
             $("a[data-edit-id]").click(function () {
                 let roleId = $(this).attr("data-edit-id");
-                smart.open("编辑角色", "edit.html", 460, 360, roleId);
+                let yesParam = {
+                    yes: function (index, layero) {
+                        let iframeWin = window[layero.find('iframe')[0]['name']];
+                        iframeWin.edit(index);
+                    }
+                }
+                let successParam = {
+                    success: function (layero, index) {
+                        let iframeWin = window[layero.find('iframe')[0]['name']];
+                        iframeWin.loadPageByDataId(roleId);
+                    }
+                }
+                smart.open("编辑角色", "edit.html", 460, 360, yesParam, successParam);
             });
             $("a[data-delete-id]").click(function () {
                 let roleId = $(this).attr("data-delete-id");
                 let ajaxParam = {
-                    url:"./"+roleId,
-                    type:"delete",
-                    dataType:"json",
-                    success:function (data) {
-                        if (data["success"]>0){
+                    url: "./" + roleId,
+                    type: "delete",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data["success"] > 0) {
                             layer.msg("删除角色成功");
-                        }else {
+                        } else {
                             layer.msg("删除角色失败");
                         }
                     }
                 }
-                smart.confirm("确定删除角色？", "提示", roleId,ajaxParam);
+                smart.confirm("确定删除角色？", "提示", roleId, ajaxParam);
             });
             $("span[data-status-id]").click(function () {
                 let roleId = $(this).attr("data-status-id");
@@ -191,7 +186,23 @@
                 };
                 smart.confirm(warMsg, "系统提示", roleId, ajaxParam);
             })
-            $("a[data-grant-id]").click(roleGrant)
+            $("a[data-grant-id]").click(function () {
+                let roleId = $(this).attr("data-grant-id");
+                let yesParam = {
+                    yes: function (index, layero) {
+                        let iframeWin = window[layero.find('iframe')[0]['name']];
+                        iframeWin.roleGrant(roleId, index);
+                    }
+                }
+
+                let successParam = {
+                    success: function (layero, index) {
+                        let iframeWin = window[layero.find('iframe')[0]['name']];
+                        iframeWin.initTree(roleId);
+                    }
+                }
+                smart.open("角色授权", "grant.html", 480, 540, yesParam, successParam)
+            })
         }
     }
 

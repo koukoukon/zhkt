@@ -1,14 +1,14 @@
-var table, tableObject,layer;
+var table, tableObject, layer;
 ;!function (win) {
     var Smart = function () {
         this.version = "1.0.1";
 
     }
     Smart.prototype.initPage = function (initParam) {
-        if (initParam["tableParam"]!=null){
+        if (initParam["tableParam"] != null) {
             this.initTable(initParam["tableParam"]);
         }
-        layui.use('layer', function(){
+        layui.use('layer', function () {
             layer = layui.layer;
         });
     }
@@ -23,39 +23,20 @@ var table, tableObject,layer;
      * @param content iframe地址
      * @param width iframe宽度
      * @param height iframe高度
-     * @param dataId iframe窗口打开类型 新增或修改
+     * @param yesParam 点击确定按钮后的方法
+     * @param successParam 渲染完成后执行的方法
      */
-    Smart.prototype.open = function(title,content,width,height,dataId){
-        let defaultParam={
+    Smart.prototype.open = function (title, content, width, height, yesParam, successParam) {
+        let defaultParam = {
             type: 2,
             title: title,
             content: content,
-            btn: ["确定","取消"],
+            btn: ["确定", "取消"],
             shade: 0.8,
-            area: [width+"px", height+"px"],
-            offset: "20px",
-            yes: function (index, layero) {
-                let iframeWin = window[layero.find('iframe')[0]['name']];
-                if (dataId==null){
-
-                    iframeWin.add(index);
-                }else {
-                    iframeWin.edit(index);
-                }
-            }
+            area: [width + "px", height + "px"],
+            offset: "20px"
         }
-        let editParam = {
-            success: function (layero, index) {
-                var iframeWin = window[layero.find('iframe')[0]['name']];
-                iframeWin.loadPageByDataId(dataId);
-            }
-        }
-        if (dataId){
-            layer.open($.extend(defaultParam,editParam))
-        }else {
-            layer.open(defaultParam)
-        }
-
+        layer.open($.extend(defaultParam, yesParam, successParam))
     }
     /**
      *
@@ -64,8 +45,8 @@ var table, tableObject,layer;
      * @param dataId 数据主键
      * @param ajaxParam ajax参数
      */
-    Smart.prototype.confirm= function(message,title,dataId,ajaxParam){
-        layer.confirm(message, {icon: 3, title:title,offset: '20px'}, function(index){
+    Smart.prototype.confirm = function (message, title, dataId, ajaxParam) {
+        layer.confirm(message, {icon: 3, title: title, offset: '20px'}, function (index) {
             $.ajax(ajaxParam)
             layer.close(index);
             table.reload("dataTable");
@@ -85,7 +66,7 @@ var table, tableObject,layer;
         }
         layui.use('table', function () {
             table = layui.table;
-            tableObject = table.render($.extend(defaultParam,tableParam));
+            tableObject = table.render($.extend(defaultParam, tableParam));
         });
     }
     win.smart = new Smart();
