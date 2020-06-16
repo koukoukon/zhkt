@@ -49,4 +49,8 @@ public class SystemMenuServiceImpl implements SystemMenuService{
         return systemMenuMapper.listSystemMenus();
     }
 
+    @Override
+    public List<SystemMenu> listByRolePidSystemMenus(Integer rolePid) {
+        return systemMenuMapper.listByRolePidSystemMenus(rolePid);
+    }
 }

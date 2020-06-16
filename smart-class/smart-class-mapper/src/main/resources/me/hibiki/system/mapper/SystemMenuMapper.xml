@@ -216,5 +216,8 @@
     <select id="listSystemMenus" resultMap="BaseResultMap">
     select * from system_menu where menu_show = 0 order by menu_order asc
     </select>
+    <select id="listByRolePidSystemMenus" resultMap="BaseResultMap">
+    select * from system_menu m inner join system_role_menu rm on m.menu_id = rm.menu_pid where rm.role_pid = #{rolePid,jdbcType=INTEGER} and m.menu_show = 0 order by menu_order asc
+    </select>
 
 </mapper>

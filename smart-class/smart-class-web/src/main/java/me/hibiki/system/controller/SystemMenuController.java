@@ -1,15 +1,15 @@
-package me.hibiki.controller;
+package me.hibiki.system.controller;
 
 import me.hibiki.system.domain.SystemMenu;
+import me.hibiki.system.domain.SystemUser;
 import me.hibiki.system.service.SystemMenuService;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author 高弘昆
@@ -22,8 +22,9 @@ public class SystemMenuController {
     private SystemMenuService systemMenuService;
 
     @GetMapping
-    public List<SystemMenu> listSystemMenus() {
-        return systemMenuService.listSystemMenus();
+    public List<SystemMenu> listSystemMenus(HttpSession httpSession) {
+        SystemUser loginUser =(SystemUser) httpSession.getAttribute("loginUser");
+        return systemMenuService.listByRolePidSystemMenus(loginUser.getRolePid());
     }
 
 }

@@ -8,7 +8,7 @@
         <result column="user_phone" jdbcType="VARCHAR" property="userPhone"/>
         <result column="user_number" jdbcType="VARCHAR" property="userNumber"/>
         <result column="organization_pid" jdbcType="INTEGER" property="organizationPid"/>
-        <result column="role_pid" jdbcType="VARCHAR" property="rolePid"/>
+        <result column="role_pid" jdbcType="INTEGER" property="rolePid"/>
         <result column="user_status" jdbcType="VARCHAR" property="userStatus"/>
         <result column="user_delete_flag" jdbcType="VARCHAR" property="userDeleteFlag"/>
         <result column="user_create_user_pid" jdbcType="INTEGER" property="userCreateUserPid"/>
@@ -49,7 +49,7 @@
         organization_pid = #{organizationPid,jdbcType=INTEGER},
             </if>
             <if test="rolePid != null and rolePid != ''">
-        role_pid = #{rolePid,jdbcType=VARCHAR},
+        role_pid = #{rolePid,jdbcType=INTEGER},
             </if>
             <if test="userStatus != null and userStatus != ''">
         user_status = #{userStatus,jdbcType=VARCHAR},

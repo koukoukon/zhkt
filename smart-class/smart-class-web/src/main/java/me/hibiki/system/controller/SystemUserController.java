@@ -1,4 +1,4 @@
-package me.hibiki.controller;
+package me.hibiki.system.controller;
 
 import com.github.pagehelper.PageInfo;
 import me.hibiki.system.domain.ResultBean;
@@ -34,13 +34,13 @@ public class SystemUserController {
         return resultMapBean;
     }
     @PostMapping(params = {"userName","userPassword","userPhone","userNumber"})
-    public ResultBean  saveSystemUser(@Validated SystemUser systemUser){
+    public ResultBean  saveSystemUser(@Validated SystemUser systemUser,@SessionAttribute("loginUser") SystemUser loginUser){
 //        SystemUser systemUser = new SystemUser();
 //        systemUser.setUserName(userName);
 //        systemUser.setUserPassword(userPassword);
 //        systemUser.setUserPhone(userPhone);
 //        systemUser.setUserNumber(userNumber);
-        systemUser.setUserCreateUserPid(0);
+        systemUser.setUserCreateUserPid(loginUser.getUserId());
         systemUser.setUserCreateDate(new Date());
         systemUser.setOrganizationPid(3);
         ResultBean resultBean = new ResultBean();
@@ -59,9 +59,9 @@ public class SystemUserController {
         return systemUserService.getSystemUserByUserId(userId);
     }
     @PutMapping(path = "/{userId}")
-    public ResultBean editRole(@PathVariable Integer userId, @Validated SystemUser systemUser) {
+    public ResultBean editRole(@PathVariable Integer userId, @Validated SystemUser systemUser,@SessionAttribute("loginUser") SystemUser loginUser) {
         systemUser.setUserId(userId);
-        systemUser.setUserEditUserPid(0);
+        systemUser.setUserEditUserPid(loginUser.getUserId());
         systemUser.setUserEditDate(new Date());
         int i = systemUserService.updateByPrimaryKeySelective(systemUser);
         ResultBean resultBean = new ResultBean();

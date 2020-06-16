@@ -47,7 +47,7 @@ public class SystemUser implements Serializable {
     /**
     * 角色外键id
     */
-    private String rolePid;
+    private Integer rolePid;
 
     /**
     * 0:正常 1:禁用

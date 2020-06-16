@@ -1,7 +1,8 @@
-package me.hibiki.controller;
+package me.hibiki.system.controller;
 
 import com.github.pagehelper.PageInfo;
 import me.hibiki.system.domain.SystemRole;
+import me.hibiki.system.domain.SystemUser;
 import me.hibiki.system.service.SystemRoleService;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,13 +36,14 @@ public class SystemRoleController {
     }
 
     @PostMapping
-    public Map<String, Integer> addSystemRole(String roleName, String roleDescription) {
+    public Map<String, Integer> addSystemRole(String roleName, String roleDescription, @SessionAttribute("loginUser")SystemUser loginUser) {
         SystemRole systemRole = new SystemRole();
         systemRole.setRoleName(roleName);
         systemRole.setRoleDescription(roleDescription);
         systemRole.setRoleDefault(0);
         systemRole.setRoleStatus(0);
         systemRole.setRoleCreateDate(new Date());
+        systemRole.setRoleCreateUserPid(loginUser.getUserId());
         int i = systemRoleService.saveSystemRole(systemRole);
         Map<String, Integer> map = new HashMap<>();
         map.put("success", i);
@@ -54,10 +56,10 @@ public class SystemRoleController {
     }
 
     @PutMapping(path = "/{roleId}")
-    public Map<String, Integer> editRole(@PathVariable Integer roleId,SystemRole systemRole) {
+    public Map<String, Integer> editRole(@PathVariable Integer roleId,SystemRole systemRole,@SessionAttribute("loginUser")SystemUser loginUser) {
         systemRole.setRoleId(roleId);
+        systemRole.setRoleEditUserPid(loginUser.getUserId());
         systemRole.setRoleEditDate(new Date());
-        System.out.println(systemRole.getRoleStatus());
         int i = systemRoleService.updateSystemRoleById(systemRole);
         Map<String, Integer> map = new HashMap<>();
         map.put("success", i);

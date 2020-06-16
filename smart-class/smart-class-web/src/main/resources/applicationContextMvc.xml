@@ -6,7 +6,7 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/mvc
        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
-    <mvc:resources mapping="/login.html" location="/"/>
+    <mvc:resources mapping="/login.html" location="/" order="0"/>
     <mvc:resources mapping="/admin/*.html" location="/admin/"/>
     <mvc:resources mapping="/admin/role/*.html" location="/admin/role/" order="0"/>
     <mvc:resources mapping="/admin/user/*.html" location="/admin/user/" order="0"/>
@@ -26,4 +26,10 @@
             </bean>
         </mvc:message-converters>
     </mvc:annotation-driven>
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/admin/**"/>
+            <bean class="me.hibiki.system.interceptor.AuthorityInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>

@@ -17,4 +17,5 @@ public interface SystemMenuMapper {
 
     int updateByPrimaryKey(SystemMenu record);
     List<SystemMenu> listSystemMenus();
+    List<SystemMenu> listByRolePidSystemMenus(Integer rolePid);
 }

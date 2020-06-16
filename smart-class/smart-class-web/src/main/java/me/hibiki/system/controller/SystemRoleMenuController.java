@@ -1,4 +1,4 @@
-package me.hibiki.controller;
+package me.hibiki.system.controller;
 
 import me.hibiki.system.domain.SystemRoleMenu;
 import me.hibiki.system.service.SystemRoleMenuService;
