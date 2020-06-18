@@ -13,4 +13,5 @@ public interface SystemRoleMenuMapper {
     List<SystemRoleMenu>  listByRolePidRoleMenus(Integer rolePid);
     int insertByList(@Param("rolePid") Integer roleId,@Param("menuPids") List<Integer> menuIds);
     int deleteRoleMenuByRolePid(Integer rolePid);
+    List<Integer> listByRolePidMenuIds(Integer rolePid);
 }

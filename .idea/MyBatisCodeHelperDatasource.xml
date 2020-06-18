@@ -46,11 +46,23 @@
                 </TableGenerateConfig>
               </value>
             </entry>
+            <entry key="zhkt:system_organization">
+              <value>
+                <TableGenerateConfig>
+                  <option name="generatedKey" value="organization_id" />
+                  <option name="javaModelName" value="SystemOrganization" />
+                  <option name="moduleName" value="smart-class-domain" />
+                  <option name="sequenceColumn" value="" />
+                  <option name="sequenceId" value="" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
             <entry key="zhkt:system_organiztion">
               <value>
                 <TableGenerateConfig>
                   <option name="generatedKey" value="organization_id" />
-                  <option name="javaModelName" value="Organiztion" />
+                  <option name="javaModelName" value="SystemOrganiztion" />
                   <option name="moduleName" value="smart-class-domain" />
                   <option name="sequenceColumn" value="" />
                   <option name="sequenceId" value="" />

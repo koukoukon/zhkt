@@ -30,4 +30,9 @@ public class SystemRoleMenuServiceImpl implements SystemRoleMenuService {
         }
         return i;
     }
+
+    @Override
+    public List<Integer> listByRolePidMenuIds(Integer rolePid) {
+        return systemRoleMenuMapper.listByRolePidMenuIds(rolePid);
+    }
 }

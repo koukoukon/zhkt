@@ -1,6 +1,7 @@
 package me.hibiki.system.controller;
 
 import com.github.pagehelper.PageInfo;
+import me.hibiki.system.annotation.RoleAnnotation;
 import me.hibiki.system.domain.SystemRole;
 import me.hibiki.system.domain.SystemUser;
 import me.hibiki.system.service.SystemRoleService;
@@ -23,6 +24,7 @@ public class SystemRoleController {
     private SystemRoleService systemRoleService;
 
     @GetMapping
+    @RoleAnnotation(value = {7})
     public Map<String, Object> listsSystemRoles(int pageNum, int pageSize, SystemRole systemRole) {
         PageInfo<SystemRole> pageInfo = systemRoleService.listSystemRoles(pageNum, pageSize, systemRole);
         List<SystemRole> systemRoles = pageInfo.getList();
@@ -36,6 +38,7 @@ public class SystemRoleController {
     }
 
     @PostMapping
+    @RoleAnnotation(value = {3})
     public Map<String, Integer> addSystemRole(String roleName, String roleDescription, @SessionAttribute("loginUser")SystemUser loginUser) {
         SystemRole systemRole = new SystemRole();
         systemRole.setRoleName(roleName);
@@ -51,11 +54,13 @@ public class SystemRoleController {
     }
 
     @GetMapping(path = "/{roleId}")
+    @RoleAnnotation(value = {2})
     public SystemRole getSystemRoleById(@PathVariable Integer roleId) {
         return systemRoleService.getSystemById(roleId);
     }
 
     @PutMapping(path = "/{roleId}")
+    @RoleAnnotation(value = {4})
     public Map<String, Integer> editRole(@PathVariable Integer roleId,SystemRole systemRole,@SessionAttribute("loginUser")SystemUser loginUser) {
         systemRole.setRoleId(roleId);
         systemRole.setRoleEditUserPid(loginUser.getUserId());
@@ -67,6 +72,7 @@ public class SystemRoleController {
     }
 
     @DeleteMapping(path = "/{roleId}")
+    @RoleAnnotation(value = {2})
     public Map<String, Integer> removeSystemRole(@PathVariable Integer roleId) {
         int i = systemRoleService.removeSystemRoleById(roleId);
         HashMap<String, Integer> map = new HashMap<>();

@@ -42,11 +42,13 @@ public class SystemUser implements Serializable {
     /**
     * 组织外键id
     */
+    @NotNull(message = "用户所属组织结构不能为空")
     private Integer organizationPid;
 
     /**
     * 角色外键id
     */
+    @NotNull(message = "用户的角色不能为空")
     private Integer rolePid;
 
     /**

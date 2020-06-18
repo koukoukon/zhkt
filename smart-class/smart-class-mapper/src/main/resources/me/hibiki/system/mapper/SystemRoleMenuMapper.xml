@@ -23,6 +23,9 @@ ORDER BY
     </insert>
     <delete id="deleteRoleMenuByRolePid">
     delete from system_role_menu where role_pid = #{rolePid,jdbcType=INTEGER}
-</delete>
+    </delete>
+    <select id="listByRolePidMenuIds" resultType="java.lang.Integer">
+        select menu_pid from system_role_menu where role_pid = #{rolePid,jdbcType=INTEGER}
+    </select>
 
 </mapper>

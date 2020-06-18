@@ -11,4 +11,5 @@ import java.util.List;
 public interface SystemRoleMenuService {
     List<SystemRoleMenu> listByRolePidRoleMenus(Integer rolePid);
     int roleGrant(Integer roleId,List<Integer> menuIds);
+    List<Integer> listByRolePidMenuIds(Integer rolePid);
 }

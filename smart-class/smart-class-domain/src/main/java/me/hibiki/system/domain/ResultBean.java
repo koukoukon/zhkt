@@ -9,4 +9,5 @@ import lombok.Data;
 @Data
 public class ResultBean {
     private int success;
+    private String  error;
 }

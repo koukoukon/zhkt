@@ -53,6 +53,15 @@
     $(function () {
         let initParam = {"tableParam": tableParam};
         smart.initPage(initParam)
+        $("#add").click(function () {
+            let yesParam = {
+                yes: function (index, layero) {
+                    let iframeWin = window[layero.find('iframe')[0]['name']];
+                    iframeWin.add(index);
+                }
+            }
+            smart.open("添加用户", "add.html", 460, 360, yesParam);
+        })
     })
     let tableParam = {
         //开启分页
@@ -111,16 +120,7 @@
                     }
                 }
                 smart.confirm("确定删除用户？", "提示", userId, ajaxParam);
-            })
-            $("#add").click(function () {
-                let yesParam = {
-                    yes: function (index, layero) {
-                        let iframeWin = window[layero.find('iframe')[0]['name']];
-                        iframeWin.add(index);
-                    }
-                }
-                smart.open("添加用户", "add.html", 460, 360, yesParam);
-            })
+            });
             $("a[data-edit-id]").click(function () {
                 let userId = $(this).attr("data-edit-id");
                 let yesParam = {
@@ -136,7 +136,7 @@
                     }
                 }
                 smart.open("编辑用户", "edit.html", 460, 360, yesParam, successParam)
-            })
+            });
         }
     }
 

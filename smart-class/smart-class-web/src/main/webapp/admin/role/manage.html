@@ -54,6 +54,16 @@
         let initParam = {"tableParam": tableParam};
         smart.initPage(initParam)
         $("#searchButton").click(search);
+        $("#add").click(function () {
+
+            let yesParam = {
+                yes: function (index, layero) {
+                    let iframeWin = window[layero.find('iframe')[0]['name']];
+                    iframeWin.add(index);
+                }
+            }
+            smart.open("添加角色", "add.html", 460, 360, yesParam);
+        })
     })
 
     function search() {
@@ -121,15 +131,7 @@
 
         ]],
         done: function () {
-            $("#add").click(function () {
-                let yesParam = {
-                    yes: function (index, layero) {
-                        let iframeWin = window[layero.find('iframe')[0]['name']];
-                        iframeWin.add(index);
-                    }
-                }
-                smart.open("添加角色", "add.html", 460, 360, yesParam);
-            })
+
             $("a[data-edit-id]").click(function () {
                 let roleId = $(this).attr("data-edit-id");
                 let yesParam = {
@@ -169,10 +171,11 @@
                 if (roleStatus == 0) {
                     warMsg = "确定要禁用该角色?"
                     roleStatus = 1;
-                } else {
+                } else if (roleStatus==1){
                     roleStatus = 0;
                 }
                 let ajaxParam = {
+                    async:false,
                     type: "put",
                     url: "./" + roleId,
                     data: {
@@ -180,7 +183,11 @@
                     },
                     success: function (data) {
                         if (data["success"] > 0) {
-                            layer.msg("禁用角色成功");
+                            if (roleStatus==0){
+                                layer.msg("启用角色成功");
+                            }else {
+                                layer.msg("禁用角色成功");
+                            }
                         }
                     }
                 };
@@ -205,6 +212,7 @@
             })
         }
     }
+
 
 </script>
 </html>

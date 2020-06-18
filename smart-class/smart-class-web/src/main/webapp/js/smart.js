@@ -27,6 +27,7 @@ var table, tableObject, layer;
      * @param successParam 渲染完成后执行的方法
      */
     Smart.prototype.open = function (title, content, width, height, yesParam, successParam) {
+
         let defaultParam = {
             type: 2,
             title: title,
@@ -36,7 +37,12 @@ var table, tableObject, layer;
             area: [width + "px", height + "px"],
             offset: "20px"
         }
-        layer.open($.extend(defaultParam, yesParam, successParam))
+        layer.open($.extend(defaultParam,yesParam,successParam))
+        // if (yesParam&&successParam){
+        //     layer.open($.extend(defaultParam,yesParam,successParam))
+        // }else if (yesParam){
+        //     layer.open($.extend(defaultParam,yesParam))
+        // }
     }
     /**
      *

@@ -1,5 +1,6 @@
 package me.hibiki.system.controller;
 
+import me.hibiki.system.annotation.RoleAnnotation;
 import me.hibiki.system.domain.SystemRoleMenu;
 import me.hibiki.system.service.SystemRoleMenuService;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,7 @@ public class SystemRoleMenuController {
     }
     @PostMapping
     @ResponseBody
+    @RoleAnnotation(value = {6})
     public Map<String,Integer> roleGrant(@RequestBody Map<String,Object> requestMap){
         System.out.println(requestMap);
         String  roleId =(String) requestMap.get("roleId");
