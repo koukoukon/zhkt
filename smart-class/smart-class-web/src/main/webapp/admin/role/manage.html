@@ -37,9 +37,8 @@
                     </form>
                 </div>
                 <div class="layui-card-header">
-                    <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除
-                    </button>
-                    <button class="layui-btn" id="add"><i class="layui-icon"></i>添加</button>
+
+                    <button class="layui-btn" id="add"><i class="layui-icon"></i>添加角色</button>
                 </div>
                 <div class="layui-card-body" id="table_wrap">
                     <table id="dataTable" lay-filter="test"></table>
@@ -60,6 +59,7 @@
                 yes: function (index, layero) {
                     let iframeWin = window[layero.find('iframe')[0]['name']];
                     iframeWin.add(index);
+                    table.reload("dataTable");
                 }
             }
             smart.open("添加角色", "add.html", 460, 360, yesParam);
